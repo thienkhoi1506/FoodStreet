@@ -1,5 +1,7 @@
 package com.streetfood.pojo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -42,6 +44,8 @@ public class User {
     private Set<Order> ordersById;
     @OneToMany(mappedBy = "userByUserId")
     private Set<Usercomment> usercommentsById;
+//    @Transient
+//    private MultipartFile avt;
 
     public long getId() {
         return id;
@@ -175,4 +179,12 @@ public class User {
     public void setUsercommentsById(Set<Usercomment> usercommentsById) {
         this.usercommentsById = usercommentsById;
     }
+
+//    public MultipartFile getAvt() {
+//        return avt;
+//    }
+//
+//    public void setAvt(MultipartFile avt) {
+//        this.avt = avt;
+//    }
 }
