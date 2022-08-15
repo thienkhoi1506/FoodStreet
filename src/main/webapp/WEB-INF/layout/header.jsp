@@ -8,15 +8,28 @@
     <link href="https://cdnjs.com/libraries/font-awesome">
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="/"><img
                 src="https://res.cloudinary.com/dxhhatnr2/image/upload/v1658998028/streetfood_1_kcxzap.png" width="100"
                 height="70"></a>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Địa điểm, món ăn..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search<i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <c:forEach items="${categories}" var="c">
+                    <c:url value="/" var="cUrl">
+                        <c:param name="cateId" value="${c.id}" />
+                    </c:url>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${cUrl}">${c.name}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Địa điểm, món ăn..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search<i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
+
     </div>
 </nav>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

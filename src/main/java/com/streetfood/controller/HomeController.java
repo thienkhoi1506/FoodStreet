@@ -29,8 +29,8 @@ public class HomeController {
     @RequestMapping("/")
     public ModelAndView index(@RequestParam Map<String, String> params, Model model) {
         ModelAndView  modelAndView = new ModelAndView("home");
-//        int page = Integer.parseInt(params.getOrDefault("page", "1"));
-//        model.addAttribute("products", this.productService.getProducts(params, page));
+        int page = Integer.parseInt(params.getOrDefault("page", "1"));
+        model.addAttribute("products", this.productService.getProducts(params, page));
         return modelAndView;
     }
 }

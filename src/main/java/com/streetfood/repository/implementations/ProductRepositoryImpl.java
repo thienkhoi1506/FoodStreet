@@ -4,6 +4,7 @@ import com.streetfood.pojo.Product;
 import com.streetfood.repository.interfaces.ProductRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @Repository
 @Transactional
+@PropertySource("classpath:page.properties")
 public class ProductRepositoryImpl implements ProductRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
@@ -59,6 +61,12 @@ public class ProductRepositoryImpl implements ProductRepository {
                         Long.parseLong(tp));
                 predicates.add(p);
             }
+            String cateId = params.get("cateId");
+            if (cateId != null) {
+                Predicate p = b.equal(root.get("categoryByCategoryId"), Integer.parseInt(cateId));
+                predicates.add(p);
+            }
+            q.where(predicates.toArray(new Predicate[]{}));
         }
 
         q.orderBy(b.desc(root.get("id")), b.desc(root.get("name")));
