@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link href="https://cdnjs.com/libraries/font-awesome">
+    <script src="<c:url value="/resource/js/main.js" />"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -23,10 +24,18 @@
                         <a class="nav-link" href="${cUrl}">${c.name}</a>
                     </li>
                 </c:forEach>
+                <li class="nav-item">
+                    <a href="<c:url value="/cart"  />" class="nav-link text-success">
+                        <i class="fas fa-shopping-cart"></i>
+
+                        <div id="cartCouter">${cartCouter}</div>
+                    </a>
+                </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Địa điểm, món ăn..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search<i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="btn btn-outline-success" type="submit">&#128269;
+                </button>
             </form>
         </div>
 
@@ -36,5 +45,3 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
 </body>
-
-
