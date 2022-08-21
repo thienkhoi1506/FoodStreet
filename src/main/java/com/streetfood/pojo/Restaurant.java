@@ -1,13 +1,14 @@
 package com.streetfood.pojo;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "restaurant", schema = "streetfood")
-public class Restaurant {
+public class Restaurant implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")

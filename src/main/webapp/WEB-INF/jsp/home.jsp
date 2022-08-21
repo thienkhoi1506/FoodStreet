@@ -3,5 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<h1 class="bg-info rounded text-white">Home Page</h1>
+<div class="container">
+    <h1 class="bg-info rounded text-white">Home Page</h1>
+</div>
 

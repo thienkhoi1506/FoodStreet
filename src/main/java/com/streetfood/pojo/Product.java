@@ -1,49 +1,74 @@
 package com.streetfood.pojo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "product", schema = "streetfood")
-public class Product {
+@XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+        @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p where p.id = :id"),
+        @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p where p.name = :name"),
+        @NamedQuery(name = "Product.findByType", query = "SELECT p FROM Product p where p.type = :type"),
+        @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p where p.price = :price"),
+})
+public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
     private long id;
     @Basic
+    @NotNull
     @Column(name = "Name")
     private String name;
     @Basic
+    @Null
     @Column(name = "Type")
     private String type;
     @Basic
+    @Null
     @Column(name = "Price")
     private BigDecimal price;
     @Basic
+    @Null
     @Column(name = "Image")
     private String image;
     @Basic
+    @Null
     @Column(name = "CreationTime")
     private Timestamp creationTime;
     @Basic
+    @Null
     @Column(name = "LastModificationTime")
     private Timestamp lastModificationTime;
     @Basic
+    @Null
     @Column(name = "IsDeleted")
     private boolean isDeleted;
     @Basic
+    @Null
     @Column(name = "DeletionTime")
     private Timestamp deletionTime;
     @OneToMany(mappedBy = "productByProductId")
     private Set<OrderDetail> orderDetailsById;
     @ManyToOne
-    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id", nullable = false)
+    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id", nullable = true)
     private Restaurant restaurantByRestaurantId;
     @ManyToOne
-    @JoinColumn(name = "CategoryId", referencedColumnName = "Id")
+    @JoinColumn(name = "CategoryId", referencedColumnName = "Id", nullable = true)
     private Category categoryByCategoryId;
+
+    @Transient
+    private MultipartFile Img;
 
     public long getId() {
         return id;
@@ -176,5 +201,13 @@ public class Product {
 
     public void setCategoryByCategoryId(Category categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
+    }
+
+    public MultipartFile getImg() {
+        return Img;
+    }
+
+    public void setImg(MultipartFile img) {
+        Img = img;
     }
 }

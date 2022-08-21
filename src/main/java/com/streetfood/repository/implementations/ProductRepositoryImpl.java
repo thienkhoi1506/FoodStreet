@@ -20,7 +20,6 @@ import java.util.Map;
 
 
 @Repository
-@Transactional
 public class ProductRepositoryImpl implements ProductRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
@@ -66,7 +65,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         Query query = session.createQuery(q);
 
         if (page > 0) {
-            int size = Integer.parseInt(env.getProperty("page.size").toString());
+            int size = Integer.parseInt(env.getProperty("page.size"));
             int start = (page - 1) * size;
             query.setFirstResult(start);
             query.setMaxResults(size);
@@ -84,13 +83,33 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean addProduct(Product p) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.save(p);
-            return true;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return false;
+        try (Session session = this.sessionFactory.getObject().getCurrentSession()){
+                session.beginTransaction();
+                Query query = session.createQuery("insert into Product (name)" + "select name from Product ");
+                int result = query.executeUpdate();
+                System.out.println("Test: " + result);
+                session.getTransaction().commit();
+        } catch (Exception e){
+            System.err.println("Add Product Fail" + e.getMessage());
+            e.printStackTrace();
         }
+        return false;
+//        try {
+//            session.save(p);
+//            return true;
+//        } catch (Exception exception) {
+//            System.err.println("Add Product Fail" + exception.getMessage());
+//            exception.printStackTrace();
+//        }
+//        return false;
+    }
+
+    @Override
+    public boolean addNewProduct(Product p) {
+        if(p != null) {
+            Session session = sessionFactory.getObject().getCurrentSession();
+            //session.save(p);
+        }
+        return false;
     }
 }

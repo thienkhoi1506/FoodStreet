@@ -2,6 +2,7 @@ package com.streetfood.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,6 +19,9 @@ import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
 
 @Configuration
 @PropertySource("classpath:database.properties")
+@ComponentScan(basePackages = {
+        "com.streetfood"
+})
 public class HibernateConfiguration {
     @Autowired
     private Environment env;
@@ -25,9 +29,7 @@ public class HibernateConfiguration {
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setPackagesToScan(new String[]{
-                "com.streetfood.pojo"
-        });
+        sessionFactory.setPackagesToScan("com.streetfood.pojo");
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;

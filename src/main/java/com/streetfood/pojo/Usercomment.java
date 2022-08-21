@@ -1,11 +1,12 @@
 package com.streetfood.pojo;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "usercomment", schema = "streetfood")
-public class Usercomment {
+public class Usercomment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")

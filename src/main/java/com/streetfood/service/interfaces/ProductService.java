@@ -11,4 +11,5 @@ public interface ProductService {
     int countProduct();
 
     boolean addProduct(Product p);
+    boolean addNewProduct(Product p);
 }

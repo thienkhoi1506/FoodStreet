@@ -1,14 +1,13 @@
 package com.streetfood.pojo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "streetfood")
-public class User {
+public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
@@ -26,8 +25,9 @@ public class User {
     @Column(name = "EmailAddress")
     private String emailAddress;
     @Basic
-    @Column(name = "Role")
-    private String role;
+    @Column(name = "Role", columnDefinition = "ENUM('User','Admin','Owner')")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     @Basic
     @Column(name = "CreationTime")
     private Timestamp creationTime;
@@ -44,8 +44,6 @@ public class User {
     private Set<Order> ordersById;
     @OneToMany(mappedBy = "userByUserId")
     private Set<Usercomment> usercommentsById;
-//    @Transient
-//    private MultipartFile avt;
 
     public long getId() {
         return id;
@@ -87,13 +85,7 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public Timestamp getCreationTime() {
         return creationTime;
@@ -140,7 +132,7 @@ public class User {
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;
         if (emailAddress != null ? !emailAddress.equals(user.emailAddress) : user.emailAddress != null) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        if (getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null) return false;
         if (creationTime != null ? !creationTime.equals(user.creationTime) : user.creationTime != null) return false;
         if (lastModificationTime != null ? !lastModificationTime.equals(user.lastModificationTime) : user.lastModificationTime != null)
             return false;
@@ -156,7 +148,7 @@ public class User {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
         result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
         result = 31 * result + (creationTime != null ? creationTime.hashCode() : 0);
         result = 31 * result + (lastModificationTime != null ? lastModificationTime.hashCode() : 0);
         result = 31 * result + (isDeleted ? 1 : 0);
@@ -180,11 +172,11 @@ public class User {
         this.usercommentsById = usercommentsById;
     }
 
-//    public MultipartFile getAvt() {
-//        return avt;
-//    }
-//
-//    public void setAvt(MultipartFile avt) {
-//        this.avt = avt;
-//    }
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }
