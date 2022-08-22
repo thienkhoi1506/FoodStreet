@@ -18,24 +18,63 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.css"
             rel="stylesheet"
     />
+    <link
+            href="<c:url value="/resources/css/header.css"/> "
+            rel="stylesheet"
+    />
+    <script defer
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
+    ></script>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <a class="navbar-brand" href="/"><img class="logo"
-                src="https://res.cloudinary.com/dxhhatnr2/image/upload/v1658998150/streetfood_gbpcjd.svg" width="150"
-                height="80"></a>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Địa điểm, món ăn..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search<i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
-    </nav>
-</div>
-<!-- MDB -->
-<script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
-></script>
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg">
+    <%--        <div class="container">--%>
+    <!-- Left elements -->
+    <div class="col-2">
+        <!-- Brand -->
+        <a class="navbar-brand logo" href="#">
+            <img
+                    src="https://res.cloudinary.com/dxhhatnr2/image/upload/v1658998150/streetfood_gbpcjd.svg"
+                    height="80"
+                    width="150"
+            />
+        </a>
+
+    </div>
+    <!-- Left elements -->
+
+    <!-- Center elements -->
+
+    <!-- Search form -->
+    <div class="col-8">
+        <div class="input-group search-box">
+            <div class="form-outline search-text">
+                <input type="search" id="form1" class="form-control"/>
+                <label class="form-label" for="form1">Search</label>
+            </div>
+            <button type="button" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Center elements -->
+
+    <!-- Right elements -->
+    <div class="col-2">
+        <button type="button" class="btn btn-link">
+            Login
+        </button>
+        <button type="button" class="btn btn-primary">
+            Sign up
+        </button>
+    </div>
+    <!-- Right elements -->
+    <%--        </div>--%>
+</nav>
+<!-- Navbar -->
+
 </body>
 
 

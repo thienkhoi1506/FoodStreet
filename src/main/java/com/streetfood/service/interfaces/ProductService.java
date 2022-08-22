@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
-    List<Product> getProducts(Map<String, String> params, int page);
+    List<Product> getProduct(Map<String, String> params, int page);
 
     int countProduct();
-
+    Product getProductById (int id);
     boolean addProduct(Product p);
-    boolean addNewProduct(Product p);
+    boolean deleteProduct(int id);
 }

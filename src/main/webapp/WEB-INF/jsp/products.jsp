@@ -15,7 +15,7 @@
     <c:if test="${errMsg != null}">
         <div class="alert alert-danger">${errMsg}</div>
     </c:if>
-    <form:form method="post" action="${action}" modelAttribute="products" enctype="multipart/form-data">
+    <form:form method="POST" action="${action}" modelAttribute="products" enctype="multipart/form-data">
         <%--    <form:errors path="*" element="div" cssClass="alert alert-danger" />--%>
         <div class="form-floating mb-3 mt-3">
             <form:input type="text" path="name" class="form-control" id="name" placeholder="name" name="name" />
@@ -34,11 +34,12 @@
             <label for="cate" class="form-label">Danh muc san pham</label>
         </div>
         <div>
+            <br>
             <form:input path="img" id="imgId" type="file" cssClass="form-control"></form:input>
         </div>
         <div>
             <br>
-            <input type="submit" value="Them san pham" class="btn btn-danger" />
+            <input type="submit" value="Them san pham" class="btn btn-primary" />
         </div>
     </form:form>
 
@@ -56,6 +57,7 @@
 </div>
 
 <%--<script defer src="<c:url value="/js/product.js"/>"></script>--%>
+
 
 <%--<script src="<c:url value="/js/product.js" />"></script>--%>
 <%--<script>--%>

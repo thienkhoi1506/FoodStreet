@@ -15,16 +15,15 @@ import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-//    @Autowired
-//    private Cloudinary cloudinary;
+    @Autowired
+    private Cloudinary cloudinary;
     @Autowired
     private ProductRepository productRepository;
 
     @Override
-    public List<Product> getProducts(Map<String, String> params, int page) {
+    public List<Product> getProduct(Map<String, String> params, int page) {
         return this.productRepository.getProduct(params, page);
     }
-
 
     @Override
     public int countProduct() {
@@ -32,30 +31,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean addProduct(Product product) {
-        return this.productRepository.addProduct(product);
-//        try {
-//            //Upload img
-//            Map r = this.cloudinary.uploader().upload(product.getImg().getBytes(), ObjectUtils.asMap("resouce_type", "auto"));
-//
-//            //Lấy img lưu xuống csdl
-//            product.setImage((String) r.get("secure_url"));
-//            //Lưu vào repos
-//            return this.productRepository.addProduct(product);
-//
-//            //Nếu đúng trả về products
-//        } catch (IOException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return false;
+    public Product getProductById(int id) {
+        return this.productRepository.getProductById(id);
     }
 
     @Override
-    @Transactional
-    public boolean addNewProduct(Product product) {
-        return productRepository.addNewProduct(new Product() {{
-            setName("sjkdbfnksdfb");
-        }});
+    public boolean addProduct(Product product) {
+        try {
+            //Upload img
+            Map r = this.cloudinary.uploader().upload(product.getImg().getBytes(),
+                    ObjectUtils.asMap("resouce_type", "auto"));
+
+            //Lấy img lưu xuống csdl
+            product.setImage((String) r.get("secure_url"));
+            //Lưu vào repos
+            return this.productRepository.addProduct(product);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
     }
+
+    @Override
+    public boolean deleteProduct(int id) {
+        return this.productRepository.deleteProduct(id);
+    }
+
 
 }

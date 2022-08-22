@@ -10,7 +10,7 @@ public interface ProductRepository {
     List<Product> getProduct(Map<String, String> params, int page);
 
     int countProduct();
-
+    Product getProductById (int id);
     boolean addProduct(Product p);
-    boolean addNewProduct(Product p);
+    boolean deleteProduct(int id);
 }
