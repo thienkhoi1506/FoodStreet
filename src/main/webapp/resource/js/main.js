@@ -19,3 +19,37 @@ function addToCart(id,name,price){
     })
 
 }
+function updateCart(obj,productId){
+
+    fetch("/streetfood_war_exploded/api/cart",{
+        method : 'put',
+        body : JSON.stringify({
+            "productId":productId,
+            "productName":"",
+            "price":0,
+            "count":obj.value
+        }),
+        headers:{
+            "Content-Type":"application/json"
+        }
+    }).then(function(res){
+        return res.json()
+    }).then(function(data){
+        let counter = document.getElementById("cartCouter")
+        counter.innerText = data
+
+    })
+}
+function deleteCart(productId,productName){
+    if(confirm(`Bạn có muốn xóa ${productName} hay không ! `)==true){
+    fetch(`/streetfood_war_exploded/api/cart/${productId}`,{
+        method : 'delete'
+    }).then(function(res){
+        return res.json()
+    }).then(function(data){
+        let counter = document.getElementById("cartCouter")
+        counter.innerText = data
+        location.reload()
+    })
+    }
+}

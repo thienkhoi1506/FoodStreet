@@ -1,5 +1,7 @@
 package com.streetfood.controller;
 
+import com.streetfood.Utils.Utils;
+import com.streetfood.pojo.Cart;
 import com.streetfood.service.interfaces.CategoryService;
 import com.streetfood.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -23,8 +26,10 @@ public class HomeController {
     private CategoryService categoryService;
 
     @ModelAttribute
-    public void commonAttr(Model model){
+    public void commonAttr(Model model, HttpSession sesion){
         model.addAttribute("categories", this.categoryService.getCategories());
+        model.addAttribute("cartCouter", Utils.countCart((Map<Integer, Cart>) sesion.getAttribute("cart")));
+
     }
     @RequestMapping("/")
     public ModelAndView index(@RequestParam Map<String, String> params, Model model) {
