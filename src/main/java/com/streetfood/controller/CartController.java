@@ -1,5 +1,6 @@
 package com.streetfood.controller;
 
+import com.streetfood.Utils.Utils;
 import com.streetfood.pojo.Cart;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ public class CartController {
             model.addAttribute("carts1",cart.values());
         else
             model.addAttribute("carts1",null);
+        model.addAttribute("cartStats", Utils.cartStats(cart));
         return "cart";
     }
 }

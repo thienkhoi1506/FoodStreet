@@ -36,7 +36,9 @@ function updateCart(obj,productId){
         return res.json()
     }).then(function(data){
         let counter = document.getElementById("cartCouter")
-        counter.innerText = data
+        counter.innerText = data.counter                          //.counter gọi từ Utils
+        let amount = document.getElementById("amountCart")
+        amount.innerText = data.amount
 
     })
 }
@@ -48,7 +50,9 @@ function deleteCart(productId,productName){
         return res.json()
     }).then(function(data){
         let counter = document.getElementById("cartCouter")
-        counter.innerText = data
+        counter.innerText = data.counter                          //.counter gọi từ Utils
+        let amount = document.getElementById("amountCart")
+        amount.innerText = data.amount                          //.amout gọi từ Utils
         location.reload()
     })
     }

@@ -3,6 +3,7 @@ package com.streetfood.controller;
 import com.streetfood.Utils.Utils;
 import com.streetfood.pojo.Cart;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,7 @@ public class CartAPIController  {
         return Utils.countCart(cart);
     }
     @PutMapping("/api/cart")
-    public int updateCart(@RequestBody Cart params, HttpSession session){
+    public ResponseEntity<Map<String,String>> updateCart(@RequestBody Cart params, HttpSession session){
         Map<Integer,Cart> cart = (Map<Integer, Cart>) session.getAttribute("cart");
         if(cart ==null)
             cart = new HashMap<>();
@@ -38,15 +39,15 @@ public class CartAPIController  {
             c.setCount(params.getCount());
         }
         session.setAttribute("cart",cart);
-        return Utils.countCart(cart);
+        return new ResponseEntity<>(Utils.cartStats(cart),HttpStatus.OK);
     }
     @DeleteMapping("/api/cart/{productId}")
-    public int deleteCart(@PathVariable(value = "productId") int productId, HttpSession session){
+    public ResponseEntity<Map<String,String>> deleteCart(@PathVariable(value = "productId") int productId, HttpSession session){
         Map<Integer,Cart> cart = (Map<Integer, Cart>) session.getAttribute("cart");
         if(cart!=null && cart.containsKey(productId)){
             cart.remove(productId);
             session.setAttribute("cart",cart);
         }
-        return Utils.countCart(cart);
+        return new ResponseEntity<>(Utils.cartStats(cart),HttpStatus.OK);    //Muốn xuất utils phải ép kiểu về reponse
     }
 }

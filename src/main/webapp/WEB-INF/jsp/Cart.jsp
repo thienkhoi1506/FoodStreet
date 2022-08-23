@@ -23,7 +23,7 @@
             <th></th>
         </tr>
         <c:forEach items="${carts1}" var="d">
-            <tr>
+            <tr >
                 <td>${d.productId}</td>
                 <td>${d.productName}</td>
                 <td>${d.price}VNĐ</td>
@@ -40,5 +40,6 @@
             </tr>
         </c:forEach>
     </table>
+    <div><p>Tổng tiền bạn cần thanh toán : <span id="amountCart">${cartStats.amount}</span>VNĐ</p></div>
     <input type="button" value="Thanh toán" class="btn btn-danger"/>
 </c:if>
