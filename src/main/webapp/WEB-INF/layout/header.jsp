@@ -30,7 +30,6 @@
 <body>
 <!-- Navbar-->
 <nav class="navbar navbar-expand-lg">
-    <%--        <div class="container">--%>
     <!-- Left elements -->
     <div class="col-2">
         <!-- Brand -->
@@ -52,26 +51,23 @@
         <div class="input-group search-box">
             <div class="form-outline search-text">
                 <input type="search" id="form1" class="form-control"/>
-                <label class="form-label" for="form1">Search</label>
+                <label class="form-label" for="form1"><i class="fas fa-search"></i> Search</label>
             </div>
-            <button type="button" class="btn btn-primary">
-                <i class="fas fa-search"></i>
-            </button>
         </div>
     </div>
     <!-- Center elements -->
 
     <!-- Right elements -->
     <div class="col-2">
-        <button type="button" class="btn btn-link">
-            Login
-        </button>
+        <a class="btn btn-link" href="<c:url value="/login" /> ">Login</a>
+<%--        <button type="button" class="btn btn-link">--%>
+<%--            Login--%>
+<%--        </button>--%>
         <button type="button" class="btn btn-primary">
             Sign up
         </button>
     </div>
     <!-- Right elements -->
-    <%--        </div>--%>
 </nav>
 <!-- Navbar -->
 

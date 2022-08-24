@@ -8,8 +8,8 @@
     <h1 class="bg-info rounded text-white">Home Page</h1>
     <div class="row">
         <c:forEach items="${products}" var="p">
-            <div class="col">
-                <div class="card h-100">
+            <div class="col-4">
+                <div class="card">
                     <img src="${p.image}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">${p.name}</h5>
