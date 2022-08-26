@@ -1,12 +1,12 @@
 package com.streetfood.pojo;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "order", schema = "streetfood")
-public class Order implements Serializable {
+public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
@@ -23,6 +23,8 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "UserId", referencedColumnName = "Id", nullable = false)
     private User userByUserId;
+    @OneToMany(mappedBy = "orderByOrderId")
+    private Set<OrderDetail> orderDetailsById;
 
     public long getId() {
         return id;
@@ -86,5 +88,13 @@ public class Order implements Serializable {
 
     public void setUserByUserId(User userByUserId) {
         this.userByUserId = userByUserId;
+    }
+
+    public Set<OrderDetail> getOrderDetailsById() {
+        return orderDetailsById;
+    }
+
+    public void setOrderDetailsById(Set<OrderDetail> orderDetailsById) {
+        this.orderDetailsById = orderDetailsById;
     }
 }

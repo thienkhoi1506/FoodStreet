@@ -3,73 +3,53 @@ package com.streetfood.pojo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "product", schema = "streetfood")
-@XmlRootElement
-@NamedQueries({
-        @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
-        @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p where p.id = :id"),
-        @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p where p.name = :name"),
-        @NamedQuery(name = "Product.findByType", query = "SELECT p FROM Product p where p.type = :type"),
-        @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p where p.price = :price"),
-})
-public class Product implements Serializable {
+public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
     private long id;
     @Basic
-    @NotNull
     @Column(name = "Name")
     private String name;
     @Basic
-    @Null
     @Column(name = "Type")
     private String type;
     @Basic
-    @Null
     @Column(name = "Price")
     private BigDecimal price;
     @Basic
-    @Null
     @Column(name = "Image")
     private String image;
     @Basic
-    @Null
     @Column(name = "CreationTime")
     private Timestamp creationTime;
     @Basic
-    @Null
     @Column(name = "LastModificationTime")
     private Timestamp lastModificationTime;
     @Basic
-    @Null
     @Column(name = "IsDeleted")
-    private boolean isDeleted;
+    private Boolean isDeleted;
     @Basic
-    @Null
     @Column(name = "DeletionTime")
     private Timestamp deletionTime;
     @OneToMany(mappedBy = "productByProductId")
     private Set<OrderDetail> orderDetailsById;
     @ManyToOne
-    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id", nullable = true)
+    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id")
     private Restaurant restaurantByRestaurantId;
     @ManyToOne
-    @JoinColumn(name = "CategoryId", referencedColumnName = "Id", nullable = true)
+    @JoinColumn(name = "CategoryId", referencedColumnName = "Id")
     private Category categoryByCategoryId;
 
-    @Transient
-    private MultipartFile Img;
 
+    @Transient
+    private MultipartFile img;
     public long getId() {
         return id;
     }
@@ -126,11 +106,11 @@ public class Product implements Serializable {
         this.lastModificationTime = lastModificationTime;
     }
 
-    public boolean isDeleted() {
+    public Boolean getDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 
@@ -150,7 +130,6 @@ public class Product implements Serializable {
         Product product = (Product) o;
 
         if (id != product.id) return false;
-        if (isDeleted != product.isDeleted) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (type != null ? !type.equals(product.type) : product.type != null) return false;
         if (price != null ? !price.equals(product.price) : product.price != null) return false;
@@ -159,6 +138,7 @@ public class Product implements Serializable {
             return false;
         if (lastModificationTime != null ? !lastModificationTime.equals(product.lastModificationTime) : product.lastModificationTime != null)
             return false;
+        if (isDeleted != null ? !isDeleted.equals(product.isDeleted) : product.isDeleted != null) return false;
         if (deletionTime != null ? !deletionTime.equals(product.deletionTime) : product.deletionTime != null)
             return false;
 
@@ -174,7 +154,7 @@ public class Product implements Serializable {
         result = 31 * result + (image != null ? image.hashCode() : 0);
         result = 31 * result + (creationTime != null ? creationTime.hashCode() : 0);
         result = 31 * result + (lastModificationTime != null ? lastModificationTime.hashCode() : 0);
-        result = 31 * result + (isDeleted ? 1 : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         result = 31 * result + (deletionTime != null ? deletionTime.hashCode() : 0);
         return result;
     }
@@ -204,10 +184,10 @@ public class Product implements Serializable {
     }
 
     public MultipartFile getImg() {
-        return Img;
+        return img;
     }
 
     public void setImg(MultipartFile img) {
-        Img = img;
+        this.img = img;
     }
 }

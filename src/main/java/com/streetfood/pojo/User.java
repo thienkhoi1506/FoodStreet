@@ -1,13 +1,17 @@
 package com.streetfood.pojo;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "streetfood")
-public class User implements Serializable {
+public class User {
+    public static final String USER = "USER";
+    public static final String ADMIN = "ADMIN";
+    public static final String OWNER = "OWNER";
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
@@ -17,17 +21,18 @@ public class User implements Serializable {
     private String userName;
     @Basic
     @Column(name = "Password")
+    @NotEmpty(message = "Password cannot be null")
     private String password;
     @Basic
     @Column(name = "AvatarUrl")
     private String avatarUrl;
     @Basic
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
     @Column(name = "EmailAddress")
     private String emailAddress;
     @Basic
-    @Column(name = "Role", columnDefinition = "ENUM('User','Admin','Owner')")
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @Column(name = "Role")
+    private String role;
     @Basic
     @Column(name = "CreationTime")
     private Timestamp creationTime;
@@ -45,6 +50,8 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userByUserId")
     private Set<Usercomment> usercommentsById;
 
+    @Transient
+    private String confirmPassword;
     public long getId() {
         return id;
     }
@@ -85,7 +92,13 @@ public class User implements Serializable {
         this.emailAddress = emailAddress;
     }
 
+    public String getRole() {
+        return role;
+    }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Timestamp getCreationTime() {
         return creationTime;
@@ -132,7 +145,7 @@ public class User implements Serializable {
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;
         if (emailAddress != null ? !emailAddress.equals(user.emailAddress) : user.emailAddress != null) return false;
-        if (getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (creationTime != null ? !creationTime.equals(user.creationTime) : user.creationTime != null) return false;
         if (lastModificationTime != null ? !lastModificationTime.equals(user.lastModificationTime) : user.lastModificationTime != null)
             return false;
@@ -148,7 +161,7 @@ public class User implements Serializable {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
         result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
-        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (creationTime != null ? creationTime.hashCode() : 0);
         result = 31 * result + (lastModificationTime != null ? lastModificationTime.hashCode() : 0);
         result = 31 * result + (isDeleted ? 1 : 0);
@@ -172,11 +185,11 @@ public class User implements Serializable {
         this.usercommentsById = usercommentsById;
     }
 
-    public UserRole getRole() {
-        return role;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
