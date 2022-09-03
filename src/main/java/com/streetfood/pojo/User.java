@@ -1,33 +1,40 @@
 package com.streetfood.pojo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "streetfood")
 public class User {
-    public static final String USER = "USER";
-    public static final String ADMIN = "ADMIN";
-    public static final String OWNER = "OWNER";
+//    @Transient
+    public static final String Admin = "Admin";
+//    @Transient
+    public static final String User = "User";
+//    @Transient
+    public static final String Owner = "Owner";
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Id")
     private long id;
     @Basic
+    @Column(name = "FirstName")
+    private String firstName;
+    @Basic
+    @Column(name = "LastName")
+    private String lastName;
+    @Basic
     @Column(name = "UserName")
-    private String userName;
+    private String username;
     @Basic
     @Column(name = "Password")
-    @NotEmpty(message = "Password cannot be null")
     private String password;
     @Basic
     @Column(name = "AvatarUrl")
     private String avatarUrl;
     @Basic
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
     @Column(name = "EmailAddress")
     private String emailAddress;
     @Basic
@@ -52,6 +59,9 @@ public class User {
 
     @Transient
     private String confirmPassword;
+
+    @Transient
+    private MultipartFile avtarImg;
     public long getId() {
         return id;
     }
@@ -60,12 +70,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
@@ -141,7 +167,9 @@ public class User {
 
         if (id != user.id) return false;
         if (isDeleted != user.isDeleted) return false;
-        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;
         if (emailAddress != null ? !emailAddress.equals(user.emailAddress) : user.emailAddress != null) return false;
@@ -157,7 +185,9 @@ public class User {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
         result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
@@ -191,5 +221,13 @@ public class User {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public MultipartFile getAvtarImg() {
+        return avtarImg;
+    }
+
+    public void setAvtarImg(MultipartFile avtarImg) {
+        this.avtarImg = avtarImg;
     }
 }

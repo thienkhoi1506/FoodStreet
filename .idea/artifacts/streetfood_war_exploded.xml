@@ -104,6 +104,9 @@
           <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.2.0" />
           <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.9.0" />
           <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.2" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:5.3.13.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:5.3.13.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:5.3.13.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">

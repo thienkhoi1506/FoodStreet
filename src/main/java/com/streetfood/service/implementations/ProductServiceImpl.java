@@ -7,7 +7,6 @@ import com.streetfood.repository.interfaces.ProductRepository;
 import com.streetfood.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;

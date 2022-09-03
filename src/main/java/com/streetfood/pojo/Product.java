@@ -47,7 +47,6 @@ public class Product {
     @JoinColumn(name = "CategoryId", referencedColumnName = "Id")
     private Category categoryByCategoryId;
 
-
     @Transient
     private MultipartFile img;
     public long getId() {

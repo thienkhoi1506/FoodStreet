@@ -33,7 +33,7 @@
     <!-- Left elements -->
     <div class="col-2">
         <!-- Brand -->
-        <a class="navbar-brand logo" href="#">
+        <a class="navbar-brand logo" href="<c:url value="/"/> ">
             <img
                     src="https://res.cloudinary.com/dxhhatnr2/image/upload/v1658998150/streetfood_gbpcjd.svg"
                     height="80"
@@ -58,15 +58,55 @@
     <!-- Center elements -->
 
     <!-- Right elements -->
-    <div class="col-2">
-        <a class="btn btn-link" href="<c:url value="/login" /> ">Login</a>
-<%--        <button type="button" class="btn btn-link">--%>
-<%--            Login--%>
-<%--        </button>--%>
-        <button type="button" class="btn btn-primary">
-            Sign up
-        </button>
-    </div>
+    <c:if test="${pageContext.request.userPrincipal.name == null}">
+        <div class="col-2">
+            <a class="btn btn-link" href="<c:url value="/login" /> "> Login </a>
+            <a class="btn btn-primary" href="<c:url value="/register" />"> Register </a>
+        </div>
+    </c:if>
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+        <div class="col-2">
+            <!-- Avatar -->
+            <div class="dropdown">
+                <a
+                        class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                        href="#"
+                        id="navbarDropdownMenuAvatar"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                    <c:if test="${currentUser.avatarUrl != null}">
+                        <img
+                                src="${currentUser.avatarUrl}"
+                                class="rounded-circle"
+                                height="25"
+                                loading="lazy"
+                        />
+                    </c:if>
+                    <c:if test="${currentUser.avatarUrl == null}">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </c:if>
+
+        </a>
+                <ul
+                        class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="navbarDropdownMenuAvatar"
+                >
+                    <li>
+                        <a class="dropdown-item" href="#">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    </c:if>
     <!-- Right elements -->
 </nav>
 <!-- Navbar -->

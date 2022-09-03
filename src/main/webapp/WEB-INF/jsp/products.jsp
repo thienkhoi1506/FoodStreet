@@ -15,7 +15,7 @@
     <c:if test="${errMsg != null}">
         <div class="alert alert-danger">${errMsg}</div>
     </c:if>
-    <form:form method="POST" action="${action}" modelAttribute="products" enctype="multipart/form-data">
+    <form:form method="post" action="${action}" modelAttribute="products" enctype="multipart/form-data">
         <%--    <form:errors path="*" element="div" cssClass="alert alert-danger" />--%>
         <div class="form-floating mb-3 mt-3">
             <form:input type="text" path="name" class="form-control" id="name" placeholder="name" name="name" />

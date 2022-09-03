@@ -1,5 +1,7 @@
 package com.streetfood.configuration;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,6 +45,17 @@ public class HibernateConfiguration {
         dataSource.setUsername(env.getProperty("hibernate.connection.username"));
         dataSource.setPassword(env.getProperty("hibernate.connection.password"));
         return dataSource;
+    }
+
+    @Bean
+    public Cloudinary cloudinary(){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dxhhatnr2",
+                "api_key", "818471842996695",
+                "api_secret", "fPUtKiuNOG1w7Eb0VEEMEMPFk3E",
+                "secure", true
+        ));
+        return cloudinary;
     }
 
     private Properties hibernateProperties() {

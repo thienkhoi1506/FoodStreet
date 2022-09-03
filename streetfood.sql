@@ -26,7 +26,7 @@ CREATE TABLE `category` (
   `Id` bigint NOT NULL AUTO_INCREMENT,
   `Name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `Id` bigint NOT NULL,
+  `Id` bigint NOT NULL AUTO_INCREMENT,
   `UserId` bigint NOT NULL,
   `CreationTime` datetime(6) NOT NULL,
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
@@ -55,7 +55,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`Id`),
   KEY `FK_Order_User_idx` (`UserId`),
   CONSTRAINT `FK_Order_User` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,20 +77,20 @@ DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
   `Id` bigint NOT NULL AUTO_INCREMENT,
   `RestaurantId` bigint NOT NULL,
-  `ProductId` bigint DEFAULT NULL,
+  `ProductId` bigint NOT NULL,
   `OrderId` bigint NOT NULL,
   `TotalPrice` decimal(18,2) NOT NULL,
   `CreationTime` datetime(6) NOT NULL,
   `IsDeleted` bit(1) DEFAULT b'0',
   `DeletionTime` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  KEY `FK_OrderDetail_Restaurant_idx` (`RestaurantId`),
-  KEY `FK_OrderDetail_Food_idx` (`ProductId`),
-  KEY `FK_OrderDetail_Order_idx` (`OrderId`),
-  CONSTRAINT `FK_OrderDetail_Order` FOREIGN KEY (`OrderId`) REFERENCES `order` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_OrderDetail_Product` FOREIGN KEY (`ProductId`) REFERENCES `product` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_OrderDetail_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `Fk_OrderDetail_Restaurant_idx` (`RestaurantId`),
+  KEY `Fk_OrderDetail_Product_idx` (`ProductId`),
+  KEY `Fk_OrderDetail_Order` (`OrderId`),
+  CONSTRAINT `Fk_OrderDetail_Order` FOREIGN KEY (`OrderId`) REFERENCES `order` (`Id`),
+  CONSTRAINT `Fk_OrderDetail_Product` FOREIGN KEY (`ProductId`) REFERENCES `product` (`Id`),
+  CONSTRAINT `Fk_OrderDetail_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,23 +110,23 @@ DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
-  `Id` bigint NOT NULL,
-  `Name` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Type` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `Price` decimal(18,2) NOT NULL,
-  `RestaurantId` bigint NOT NULL,
-  `Image` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Price` decimal(18,2) DEFAULT NULL,
+  `RestaurantId` bigint DEFAULT NULL,
+  `Image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `CategoryId` bigint DEFAULT NULL,
-  `CreationTime` datetime(6) NOT NULL,
+  `CreationTime` datetime(6) DEFAULT NULL,
   `LastModificationTime` datetime(6) DEFAULT NULL,
-  `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `DeletionTime` datetime(6) NOT NULL,
+  `IsDeleted` bit(1) DEFAULT b'0',
+  `DeletionTime` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  KEY `FK_Product_Restaurant` (`RestaurantId`),
-  KEY `FK_Product_Category_idx` (`CategoryId`),
-  CONSTRAINT `FK_Product_Category` FOREIGN KEY (`CategoryId`) REFERENCES `category` (`Id`),
-  CONSTRAINT `FK_Product_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `Fk_Product_Restaurant_idx` (`RestaurantId`),
+  KEY `Fk_Product_Category_idx` (`CategoryId`),
+  CONSTRAINT `Fk_Product_Category` FOREIGN KEY (`CategoryId`) REFERENCES `category` (`Id`),
+  CONSTRAINT `Fk_Product_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,6 +135,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (4,'ehethkejrht',NULL,NULL,NULL,NULL,NULL,NULL,NULL,_binary '\0',NULL),(6,'Test',NULL,200000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661087919/dqqj51oreeeywdlfb8x2.jpg',1,NULL,NULL,_binary '\0',NULL),(7,'Test',NULL,200000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661087919/bcswyngnlih96r6m0l8n.jpg',1,NULL,NULL,_binary '\0',NULL),(8,'Test',NULL,200000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661087919/f26d2hfqf52zge5n97ye.jpg',1,NULL,NULL,_binary '\0',NULL),(9,'Test',NULL,200000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661087919/fh6ocx1uk63aznnsv0tx.jpg',1,NULL,NULL,_binary '\0',NULL),(10,'Test',NULL,200000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661087920/bghkcbgzjmeyfb3jzies.jpg',1,NULL,NULL,_binary '\0',NULL),(11,'Test 2',NULL,300000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1661088012/p3fxlcnemfioib9jrwjo.png',1,NULL,NULL,_binary '\0',NULL),(12,'TEST PRODUCT ',NULL,20000000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1662025539/m3dto5t5jeffbnk3rlc6.jpg',1,NULL,NULL,NULL,NULL),(13,'TEST PRODUCT ',NULL,20000000.00,NULL,'https://res.cloudinary.com/dxhhatnr2/image/upload/v1662025539/pn5xv5li9oktnhga20cl.jpg',1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,20 +147,20 @@ DROP TABLE IF EXISTS `restaurant`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `restaurant` (
-  `Id` bigint NOT NULL,
-  `Name` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Address` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Rating` int DEFAULT NULL,
-  `Avatar` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `Thumbnail_img` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Thumbnail_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `TimeOpen` time NOT NULL,
-  `TimeClose` time DEFAULT NULL,
+  `TimeClose` time NOT NULL,
   `CreationTime` datetime(6) NOT NULL,
   `LastModificationTime` datetime(6) DEFAULT NULL,
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
   `DeletionTime` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,18 +180,20 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `Id` bigint NOT NULL,
-  `UserName` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Password` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `AvatarUrl` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `EmailAddress` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `Role` varchar(0) NOT NULL,
-  `CreationTime` datetime(6) NOT NULL,
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `LastName` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `UserName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `AvatarUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `EmailAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `Role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `CreationTime` datetime(6) DEFAULT NULL,
   `LastModificationTime` datetime(6) DEFAULT NULL,
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
   `DeletionTime` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,6 +202,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,NULL,'Jin','admin','123456',NULL,'test@gmail.com','Admin',NULL,NULL,_binary '\0',NULL),(2,NULL,'admin','admin1','$2a$10$9zkdqJCQWokNunpMG0/0oe804X6o2GOsnHVlmudcKwiNil/KdqaNC',NULL,NULL,'User',NULL,NULL,_binary '\0',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,20 +214,20 @@ DROP TABLE IF EXISTS `usercomment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usercomment` (
-  `Id` bigint NOT NULL,
+  `Id` bigint NOT NULL AUTO_INCREMENT,
   `UserId` bigint NOT NULL,
   `RestaurantId` bigint NOT NULL,
-  `Comment` varchar(0) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreationTime` datetime(6) NOT NULL,
   `LastModificationTime` datetime(6) DEFAULT NULL,
   `IsDeleted` tinyint(1) NOT NULL DEFAULT '0',
   `DeletionTime` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  KEY `FK_UserComment_User` (`UserId`),
-  KEY `FK_UserComment_Restaurant` (`RestaurantId`),
-  CONSTRAINT `FK_UserComment_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`),
-  CONSTRAINT `FK_UserComment_User` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `Fk_UserComment_User_idx` (`UserId`),
+  KEY `Fk_UserComment_Restaurant_idx` (`RestaurantId`),
+  CONSTRAINT `Fk_UserComment_Restaurant` FOREIGN KEY (`RestaurantId`) REFERENCES `restaurant` (`Id`),
+  CONSTRAINT `Fk_UserComment_User` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-09 10:13:36
+-- Dump completed on 2022-09-03 18:46:38

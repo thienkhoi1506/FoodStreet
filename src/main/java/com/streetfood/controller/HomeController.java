@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -25,8 +26,9 @@ public class HomeController {
     private Environment env;
 
     @ModelAttribute
-    public void commonAttr(Model model){
+    public void commonAttr(Model model, HttpSession session){
         model.addAttribute("categories", this.categoryService.getCategories());
+        model.addAttribute("currentUser", session.getAttribute("currentUser"));
     }
 //    @RequestMapping("/")
 //    public ModelAndView index(@RequestParam Map<String, String> params, Model model) {
