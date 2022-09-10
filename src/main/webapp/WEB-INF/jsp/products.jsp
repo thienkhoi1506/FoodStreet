@@ -11,19 +11,20 @@
 <h1 class="text-center text-primary">QUAN LY SAN PHAM</h1>
 
 <div class="container">
-    <c:url value="/products" var="action" />
+    <c:url value="/admin/products/create" var="action" />
     <c:if test="${errMsg != null}">
         <div class="alert alert-danger">${errMsg}</div>
     </c:if>
-    <form:form method="post" action="${action}" modelAttribute="products" enctype="multipart/form-data">
-        <%--    <form:errors path="*" element="div" cssClass="alert alert-danger" />--%>
+    <form:form method="post" action="${action}" modelAttribute="product" enctype="multipart/form-data">
         <div class="form-floating mb-3 mt-3">
             <form:input type="text" path="name" class="form-control" id="name" placeholder="name" name="name" />
             <label for="name">Ten san pham</label>
+            <form:errors path="name" element="div" cssClass="invalid-feedback"></form:errors>
         </div>
         <div class="form-floating mb-3 mt-3">
             <form:input type="number" path="price" class="form-control" id="price" placeholder="price" name="price" />
             <label for="name">Gia san pham</label>
+            <form:errors path="price" element="div" cssClass="invalid-feedback"></form:errors>
         </div>
         <div class="form-floating">
             <form:select path="categoryByCategoryId" class="form-select" id="cate" name="cate">
@@ -39,30 +40,10 @@
         </div>
         <div>
             <br>
-            <input type="submit" value="Them san pham" class="btn btn-primary" />
+            <form:button type="submit"
+                         class="btn btn-primary btn-lg btn-block">Submit</form:button>
         </div>
     </form:form>
-
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Price</th>
-            <th></th>
-        </tr>
-        <tbody id="myProd">
-
-        </tbody>
-    </table>
 </div>
 
-<%--<script defer src="<c:url value="/js/product.js"/>"></script>--%>
 
-
-<%--<script src="<c:url value="/js/product.js" />"></script>--%>
-<%--<script>--%>
-<%--    <c:url value="/api/products" var="endpoint" />--%>
-<%--    window.onload = function () {--%>
-<%--        loadProducts('${endpoint}');--%>
-<%--    }--%>
-<%--</script>--%>

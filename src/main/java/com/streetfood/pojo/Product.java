@@ -3,6 +3,9 @@ package com.streetfood.pojo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -16,12 +19,15 @@ public class Product {
     private long id;
     @Basic
     @Column(name = "Name")
+    @NotNull(message = "{product.name.err}")
     private String name;
     @Basic
     @Column(name = "Type")
     private String type;
     @Basic
     @Column(name = "Price")
+    @Min(value = 10000, message = "{product.price.minErr}")
+    @Max(value = 10000000, message = "{product.price.maxErr}")
     private BigDecimal price;
     @Basic
     @Column(name = "Image")

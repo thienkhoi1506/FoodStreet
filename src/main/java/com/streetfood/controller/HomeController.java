@@ -1,7 +1,10 @@
 package com.streetfood.controller;
 
+import com.streetfood.Utils.Util;
+import com.streetfood.pojo.Cart;
 import com.streetfood.service.interfaces.CategoryService;
 import com.streetfood.service.interfaces.ProductService;
+import com.streetfood.service.interfaces.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -21,6 +24,8 @@ public class HomeController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RestaurantService restaurantService;
 
     @Autowired
     private Environment env;
@@ -28,17 +33,16 @@ public class HomeController {
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session){
         model.addAttribute("categories", this.categoryService.getCategories());
+        model.addAttribute("cartCouter", Util.countCart((Map<Integer, Cart>) session.getAttribute("cart")));
         model.addAttribute("currentUser", session.getAttribute("currentUser"));
     }
-//    @RequestMapping("/")
-//    public ModelAndView index(@RequestParam Map<String, String> params, Model model) {
-//        ModelAndView  modelAndView = new ModelAndView("home");
-//        return modelAndView;
-//    }
+
     @RequestMapping("/")
     public String index(Model model,
                         @RequestParam Map<String, String> params){
         int page = Integer.parseInt(params.getOrDefault("page","1"));
+//        model.addAttribute("restaurant", this.restaurantService.getRestaurant(params, page));
+//        model.addAttribute("restaurantCounter", this.restaurantService.countRestaurant());
         model.addAttribute("products", this.productService.getProduct(params, page));
         model.addAttribute("productCounter", this.productService.countProduct());
         model.addAttribute("pageSize", Integer.parseInt(env.getProperty("page.size")));

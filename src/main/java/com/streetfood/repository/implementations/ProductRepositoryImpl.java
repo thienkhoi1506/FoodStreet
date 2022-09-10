@@ -83,35 +83,31 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Product getProductById(int id) {
+    public Product getProductById(long id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         return session.get(Product.class, id);
     }
 
     @Override
-    public boolean addProduct(Product p) {
+    public void addOrUpdateProduct(Product p) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            session.save(p);
-            return true;
+            session.saveOrUpdate(p);
         } catch (Exception exception) {
-            System.err.println("Add Product Fail" + exception.getMessage());
             exception.printStackTrace();
         }
-        return false;
     }
 
     @Override
-    public boolean deleteProduct(int id) {
+    public void deleteProduct(long id) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try{
             Product product = session.get(Product.class, id);
             session.delete(product);
-            return true;
         } catch (Exception e){
             e.printStackTrace();
-            return false;
         }
     }
+
 
 }

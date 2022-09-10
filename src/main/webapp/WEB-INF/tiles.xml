@@ -21,5 +21,17 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     <definition name="register" extends="baseLayout">
         <put-attribute name="content" value="/WEB-INF/jsp/register.jsp"/>
     </definition>
+    <definition name="details" extends="baseLayout">
+        <put-attribute name="content" value="/WEB-INF/jsp/details.jsp"/>
+    </definition>
+    <definition name="user" extends="baseLayout">
+        <put-attribute name="content" value="/WEB-INF/jsp/user.jsp"/>
+    </definition>
+    <definition name="cart" extends="baseLayout">
+        <put-attribute name="content" value="/WEB-INF/jsp/cart.jsp"/>
+    </definition>
+    <definition name="restaurant" extends="baseLayout">
+        <put-attribute name="content" value="/WEB-INF/jsp/restaurant.jsp"/>
+    </definition>
 </tiles-definitions>
 

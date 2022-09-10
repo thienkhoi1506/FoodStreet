@@ -1,19 +1,19 @@
 package com.streetfood.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "streetfood")
 public class User {
-//    @Transient
     public static final String Admin = "Admin";
-//    @Transient
     public static final String User = "User";
-//    @Transient
     public static final String Owner = "Owner";
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -30,27 +30,34 @@ public class User {
     private String username;
     @Basic
     @Column(name = "Password")
+    @JsonIgnore
     private String password;
     @Basic
     @Column(name = "AvatarUrl")
     private String avatarUrl;
     @Basic
     @Column(name = "EmailAddress")
+    @UniqueElements
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
     private String emailAddress;
     @Basic
     @Column(name = "Role")
     private String role;
     @Basic
     @Column(name = "CreationTime")
+    @JsonIgnore
     private Timestamp creationTime;
     @Basic
     @Column(name = "LastModificationTime")
+    @JsonIgnore
     private Timestamp lastModificationTime;
     @Basic
     @Column(name = "IsDeleted")
+    @JsonIgnore
     private boolean isDeleted;
     @Basic
     @Column(name = "DeletionTime")
+    @JsonIgnore
     private Timestamp deletionTime;
     @OneToMany(mappedBy = "userByUserId")
     private Set<Order> ordersById;

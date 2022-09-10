@@ -30,12 +30,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(int id) {
+    public Product getProductById(long id) {
         return this.productRepository.getProductById(id);
     }
 
     @Override
-    public boolean addProduct(Product product) {
+    public void addOrUpdateProduct(Product product) {
         try {
             //Upload img
             Map r = this.cloudinary.uploader().upload(product.getImg().getBytes(),
@@ -44,17 +44,14 @@ public class ProductServiceImpl implements ProductService {
             //Lấy img lưu xuống csdl
             product.setImage((String) r.get("secure_url"));
             //Lưu vào repos
-            return this.productRepository.addProduct(product);
+            this.productRepository.addOrUpdateProduct(product);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        return false;
     }
 
     @Override
-    public boolean deleteProduct(int id) {
-        return this.productRepository.deleteProduct(id);
+    public void deleteProduct(long id) {
+        this.productRepository.deleteProduct(id);
     }
-
-
 }

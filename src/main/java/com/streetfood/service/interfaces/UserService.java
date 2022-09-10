@@ -9,5 +9,7 @@ public interface UserService extends UserDetailsService {
     boolean addUser(User user);
     User getUserByUsername(String username);
 
-//    List<User> getUsers(String username);
+    List<User> getAllUsers();
+    User getUserById (long id);
+
 }

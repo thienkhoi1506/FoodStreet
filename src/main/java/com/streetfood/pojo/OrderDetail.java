@@ -1,6 +1,7 @@
 package com.streetfood.pojo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -13,7 +14,11 @@ public class OrderDetail {
     private long id;
     @Basic
     @Column(name = "TotalPrice")
+    @NotNull
     private BigDecimal totalPrice;
+    @Basic
+    @Column(name = "Test")
+    private int Test;
     @Basic
     @Column(name = "CreationTime")
     private Timestamp creationTime;
@@ -121,5 +126,13 @@ public class OrderDetail {
 
     public void setOrderByOrderId(Order orderByOrderId) {
         this.orderByOrderId = orderByOrderId;
+    }
+
+    public int getTest() {
+        return Test;
+    }
+
+    public void setTest(int test) {
+        Test = test;
     }
 }

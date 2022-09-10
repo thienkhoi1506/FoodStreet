@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -31,7 +32,6 @@ import java.util.Set;
         "com.streetfood.controller",
         "com.streetfood.service",
         "com.streetfood.repository",
-        "com.streetfood.validator"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
@@ -59,39 +59,38 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         CommonsMultipartResolver resolver
                 = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("UTF-8");
+        resolver.setMaxUploadSize(150000);
         return resolver;
     }
 
+    @Bean
+    public StandardServletMultipartResolver servletMultipartResolver(){
+        return new StandardServletMultipartResolver();
+    }
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new CategoryFormatter());
     }
 
-    //    @Bean
-//    public MessageSource messageSource(){
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasenames("messages");
-//
-//        return messageSource;
-//    }
 //    @Override
-//    public Validator getValidator(){
-//        return localValidatorFactoryBean();
-//    }
-//    @Bean
-//    public LocalValidatorFactoryBean localValidatorFactoryBean(){
-//        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-//        bean.setValidationMessageSource(messageSource());
-//
-//        return bean;
+//    public Validator getValidator() {
+//        return validator();
 //    }
 //
 //    @Bean
-//    public WebAppValidator productValidator(){
-//        Set<Validator> springValidators = new HashSet<>();
-////        springValidators.add()
-//        WebAppValidator webAppValidator = new WebAppValidator();
-//        return webAppValidator;
+//    public Validator validator() {
+//        LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
+//        v.setValidationMessageSource(messageSource());
+//
+//        return v;
+//    }
+//
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource m = new ResourceBundleMessageSource();
+//        m.setBasenames("messages");
+//
+//        return m;
 //    }
 
 }
