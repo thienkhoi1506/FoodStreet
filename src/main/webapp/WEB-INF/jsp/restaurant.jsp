@@ -16,7 +16,7 @@
 />
 <div class="row" >
     <c:forEach items="${products}" var="p">
-        g<div class="col-md-4 col-xs-12" id="asd">
+        <div class="col-md-4 col-xs-12" id="asd">
             <h4>Thông tin Món ăn/ đồ uống</h4>
             <h4>${p.product_Detail}</h4>
 
@@ -30,7 +30,7 @@
                         </p>
                         <a href="#" class="btn btn-primary" onclick="addToCart(${p.id},'${p.name}',${p.price})">Đặt hàng</a>
                     </div>
-                    </div>
+        </div>
         <div class="col-md-4 col-xs-12"  id="asd">
             <h4>Đánh giá</h4>
         </div>

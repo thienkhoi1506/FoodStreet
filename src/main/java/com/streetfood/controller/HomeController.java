@@ -33,6 +33,7 @@ public class HomeController {
     @ModelAttribute
     public void commonAttr(Model model, HttpSession sesion){
         //model.addAttribute("categories", this.categoryService.getCategories());
+        //tổng tiền đơn hàng (countCart nằm trong Utils
         model.addAttribute("cartCouter", Utils.countCart((Map<Integer, Cart>) sesion.getAttribute("cart")));
 
 

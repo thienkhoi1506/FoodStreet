@@ -22,9 +22,9 @@ public class    CartAPIController  {
         if(cart ==null)
             cart = new HashMap<>();
         int productId=params.getProductId();
-        if(cart.containsKey(productId)==true){
+        if(cart.containsKey(productId)==true){//ktr sản phẩm nào được click
             Cart c= cart.get(productId);
-            c.setCount(c.getCount()+1);
+            c.setCount(c.getCount()+1);//Tăng số hiển thị giỏ hàng lên 1
         }
         else{
             cart.put(productId,params);
@@ -38,9 +38,9 @@ public class    CartAPIController  {
         if(cart ==null)
             cart = new HashMap<>();
         int productId=params.getProductId();
-        if(cart.containsKey(productId)==true){
+        if(cart.containsKey(productId)==true){// ktr sản phẩm nào trong giỏ được thay đổi giá trị
             Cart c= cart.get(productId);
-            c.setCount(params.getCount());
+            c.setCount(params.getCount());// lấy giá trị từ vị trí được thay đổi trong giỏ + với sản phẩm khác
         }
         session.setAttribute("cart",cart);
         return new ResponseEntity<>(Utils.cartStats(cart),HttpStatus.OK);
@@ -48,6 +48,8 @@ public class    CartAPIController  {
     @DeleteMapping("/api/cart/{productId}")
     public ResponseEntity<Map<String,String>> deleteCart(@PathVariable(value = "productId") int productId, HttpSession session){
         Map<Integer,Cart> cart = (Map<Integer, Cart>) session.getAttribute("cart");
+
+        //nếu click xóa thì chỉ gọi remove sản phẩm đó
         if(cart!=null && cart.containsKey(productId)){
             cart.remove(productId);
             session.setAttribute("cart",cart);

@@ -35,6 +35,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         try {
             Session session = this.sessionFactory.getObject().getCurrentSession();
                 OrderDetail d = new OrderDetail();
+                //chưa luư vào database được nha
                 d.setTest(1);
 
                 return true;
