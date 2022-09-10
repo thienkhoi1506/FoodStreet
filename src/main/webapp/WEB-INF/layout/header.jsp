@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="/"><img
+        <a class="navbar-brand" href="<c:url value="/"  />"><img
                 src="https://res.cloudinary.com/dxhhatnr2/image/upload/v1658998028/streetfood_1_kcxzap.png" width="100"
                 height="70"></a>
         <div class="collapse navbar-collapse" id="mynavbar">
@@ -32,9 +32,10 @@
                     </a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Địa điểm, món ăn..." aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">&#128269;
+            <c:url value="/" var="action" />
+            <form method="get" action="${action}" class="d-flex">
+                <input class="form-control me-2" name="kw"  type="text" placeholder="Địa điểm, món ăn..." >
+                <button type="submit" class="btn btn-outline-success" type="button">&#128269;
                 </button>
             </form>
         </div>

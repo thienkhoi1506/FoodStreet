@@ -21,17 +21,21 @@ public class OrderDetail {
     @Column(name = "IsDeleted")
     private Boolean isDeleted;
     @Basic
+    @Column(name = "Test")
+    private int Test;
+    @Basic
     @Column(name = "DeletionTime")
     private Timestamp deletionTime;
     @ManyToOne
-    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id", nullable = false)
+    @JoinColumn(name = "RestaurantId", referencedColumnName = "Id")
     private Restaurant restaurantByRestaurantId;
     @ManyToOne
     @JoinColumn(name = "ProductId", referencedColumnName = "Id")
     private Product productByProductId;
     @ManyToOne
-    @JoinColumn(name = "OrderId", referencedColumnName = "Id", nullable = false)
+    @JoinColumn(name = "OrderId", referencedColumnName = "Id" )
     private Order orderByOrderId;
+
 
     public long getId() {
         return id;
@@ -121,5 +125,13 @@ public class OrderDetail {
 
     public void setOrderByOrderId(Order orderByOrderId) {
         this.orderByOrderId = orderByOrderId;
+   }
+
+    public int getTest() {
+        return Test;
+    }
+
+    public void setTest(int test) {
+        Test = test;
     }
 }

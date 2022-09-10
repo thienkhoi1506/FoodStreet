@@ -2,6 +2,8 @@ package com.streetfood.controller;
 
 import com.streetfood.Utils.Utils;
 import com.streetfood.pojo.Cart;
+import com.streetfood.service.interfaces.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class CartAPIController  {
+public class    CartAPIController  {
+    @Autowired
+    private OrderService orderService;
     @PostMapping("/api/cart")
     public int addToCart(@RequestBody Cart params, HttpSession session){
         Map<Integer,Cart> cart = (Map<Integer, Cart>) session.getAttribute("cart");
@@ -49,5 +53,14 @@ public class CartAPIController  {
             session.setAttribute("cart",cart);
         }
         return new ResponseEntity<>(Utils.cartStats(cart),HttpStatus.OK);    //Muốn xuất utils phải ép kiểu về reponse
+    }
+    @PostMapping("/api/pay")
+    public HttpStatus pay(HttpSession sesion){
+        if(this.orderService.addBill((Map<Integer, Cart>) sesion.getAttribute("cart"))== true){
+            sesion.removeAttribute("cart");
+            return HttpStatus.OK;
+        }
+        else
+            return HttpStatus.BAD_REQUEST;
     }
 }

@@ -9,20 +9,34 @@
         <strong>Khong co san pham nao!!!</strong>
     </p>
 </c:if>
-
+<%--<div class="row">--%>
+<%--    <c:forEach items="${products}" var="p">--%>
+<%--        <div class="col-md-3 col-xs-12" style="padding:10px;">--%>
+<%--            <div class="card">--%>
+<%--                <img class="card-img-top" src="${p.image}" alt="Card image">--%>
+<%--                <div class="card-body">--%>
+<%--                    <h4 class="card-title">${p.name}</h4>--%>
+<%--                    <p class="card-text">--%>
+<%--                            ${p.price} VND--%>
+<%--                    </p>--%>
+<%--                    <a href="#" class="btn btn-primary" onclick="addToCart(${p.id},'${p.name}',${p.price})">Đặt hàng</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </c:forEach>--%>
+<%--</div>--%>
 <div class="row">
-    <c:forEach items="${products}" var="p">
+    <c:forEach items="${restaurant}" var="r">
         <div class="col-md-3 col-xs-12" style="padding:10px;">
             <div class="card">
-                <img class="card-img-top" src="${p.image}" alt="Card image">
+                <a href="<c:url value="/restaurant"/>" >
+                 <img class="card-img-top"  src="${r.avatar}" alt="Card image">
+                </a>
                 <div class="card-body">
-                    <h4 class="card-title">${p.name}</h4>
-                    <p class="card-text">
-                            ${p.price} VND
-                    </p>
-                    <a href="#" class="btn btn-primary" onclick="addToCart(${p.id},'${p.name}',${p.price})">Đặt hàng</a>
+                    <h4 class="card-title">${r.name}</h4>
                 </div>
             </div>
         </div>
     </c:forEach>
 </div>
+

@@ -57,3 +57,16 @@ function deleteCart(productId,productName){
     })
     }
 }
+function pay(){
+    if(confirm("Bạn có chắc chắn thanh toán không !!")==true){
+        fetch("/streetfood_war_exploded/api/pay",
+            {
+            method : 'post'
+        }).then(function(res){
+            return res.json()
+        }).then(function(code) {
+            console.info(code)
+            location.reload()
+        })
+    }
+}

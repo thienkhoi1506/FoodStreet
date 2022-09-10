@@ -25,6 +25,9 @@ public class Product {
     @Column(name = "Image")
     private String image;
     @Basic
+    @Column(name = "Product_Detail")
+    private String product_Detail;
+    @Basic
     @Column(name = "CreationTime")
     private Timestamp creationTime;
     @Basic
@@ -176,5 +179,13 @@ public class Product {
 
     public void setCategoryByCategoryId(Category categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
+    }
+
+    public String getProduct_Detail() {
+        return product_Detail;
+    }
+
+    public void setProduct_Detail(String product_Detail) {
+        this.product_Detail = product_Detail;
     }
 }

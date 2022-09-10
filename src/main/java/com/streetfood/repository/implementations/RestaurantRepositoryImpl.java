@@ -1,8 +1,10 @@
 package com.streetfood.repository.implementations;
 
 import com.streetfood.pojo.Product;
-import com.streetfood.repository.interfaces.ProductRepository;
+import com.streetfood.pojo.Restaurant;
+import com.streetfood.repository.interfaces.RetaurantRepository;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -10,7 +12,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -19,23 +20,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 @Repository
 @Transactional
 @PropertySource("classpath:page.properties")
-public class ProductRepositoryImpl implements ProductRepository {
+public class RestaurantRepositoryImpl implements RetaurantRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
     @Autowired
     private Environment env;
 
     @Override
-    public List<Product> getProduct(Map<String, String> params, int page) {
+    public List<Restaurant> getRestaurant(Map<String, String> params, int page) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
 
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Product> q = b.createQuery(Product.class);
-        Root root = q.from(Product.class);
+        CriteriaQuery<Restaurant> q = b.createQuery(Restaurant.class);
+        Root root = q.from(Restaurant.class);
         q.select(root);
 
         if (params != null) {
@@ -47,25 +47,6 @@ public class ProductRepositoryImpl implements ProductRepository {
                 predicates.add(p);
             }
 
-            String fp = params.get("fromPrice");
-            if (fp != null) {
-                Predicate p = b.greaterThanOrEqualTo(root.get("price").as(Long.class),
-                        Long.parseLong(fp));
-                predicates.add(p);
-            }
-
-            String tp = params.get("toPrice");
-            if (tp != null) {
-                Predicate p = b.lessThanOrEqualTo(root.get("price").as(Long.class),
-                        Long.parseLong(tp));
-                predicates.add(p);
-            }
-
-            String cateId = params.get("cateId");
-            if (cateId != null) {
-                Predicate p = b.equal(root.get("categoryId"), Integer.parseInt(cateId));
-                predicates.add(p);
-            }
 
             q.where(predicates.toArray(new Predicate[]{}));
 
@@ -73,7 +54,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         q.orderBy(b.desc(root.get("id")), b.desc(root.get("name")));
 
-        org.hibernate.query.Query query = session.createQuery(q);
+        Query query = session.createQuery(q);
 
         if (page > 0) {
             int size = Integer.parseInt(env.getProperty("page.size").toString());
@@ -85,23 +66,5 @@ public class ProductRepositoryImpl implements ProductRepository {
         return query.getResultList();
     }
 
-    @Override
-    public int countProduct() {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("select count (*) FROM Product ");
 
-        return Integer.parseInt(q.getSingleResult().toString());
     }
-
-    @Override
-    public boolean addProduct(Product p) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.save(p);
-            return true;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return false;
-        }
-    }
-}

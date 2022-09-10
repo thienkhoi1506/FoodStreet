@@ -21,4 +21,5 @@ public class CartController {
         model.addAttribute("cartStats", Utils.cartStats(cart));
         return "cart";
     }
+
 }
